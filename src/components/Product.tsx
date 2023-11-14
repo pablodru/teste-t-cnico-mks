@@ -19,7 +19,7 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-	const { productsSelected, setProductsSelected, isOpen, setIsOpen } = useAppContext();
+	const { setProductsSelected } = useAppContext();
 
     function buy () {
 		setProductsSelected(prev => [...prev, product])

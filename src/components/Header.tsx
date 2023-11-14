@@ -4,7 +4,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { useAppContext } from "@/contexts/appContext";
 
 export default function Header() {
-	const { productsSelected, setProductsSelected, isOpen, setIsOpen } = useAppContext();
+	const { productsSelected, setIsOpen } = useAppContext();
 
 	return (
 		<SCHeader>

@@ -4,8 +4,7 @@ import "@fontsource/montserrat";
 import { useAppContext } from "@/contexts/appContext";
 
 export default function Cart() {
-	const { productsSelected, setProductsSelected, isOpen, setIsOpen } =
-		useAppContext();
+	const { productsSelected, isOpen, setIsOpen } = useAppContext();
 
 	const countProductOccurrences = () => {
 		const idCountMap = new Map();
@@ -25,20 +24,25 @@ export default function Cart() {
 
 	const calculateTotal = () => {
 		let total = 0;
-	
-		productsSelected.forEach((product) => {
-		  if (product.price) {
-			const productCount = countProductOccurrences().get(product.id) || 0;
-			total += Number(product.price) * productCount;
-		  }
+		const uniqueProductIds = new Set(
+			productsSelected.map((product) => product.id)
+		);
+
+		uniqueProductIds.forEach((productId) => {
+			const product = productsSelected.find((p) => p.id === productId);
+			if (product && product.price) {
+				const productCount =
+					countProductOccurrences().get(productId) || 0;
+				total += Number(product.price) * productCount;
+			}
 		});
-	
+
 		return total;
-	  };
+	};
 
 	if (isOpen) {
 		const idOccurrences = countProductOccurrences();
-		const total = calculateTotal()
+		const total = calculateTotal();
 
 		return (
 			<>

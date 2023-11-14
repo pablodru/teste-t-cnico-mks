@@ -10,7 +10,7 @@ export default function ProductSelected({
 	product: ProductType;
 	count: Map<any, any>;
 }) {
-	const { productsSelected, setProductsSelected, isOpen, setIsOpen } =
+	const { setProductsSelected } =
 		useAppContext();
 	const productCount = count.get(product.id) || 0;
 
@@ -57,7 +57,7 @@ export default function ProductSelected({
 						</button>
 					</div>
 				</SCQtd>
-				<p> R${product.price} </p>
+				<p> R${Number(product.price).toFixed(0)} </p>
 			</SCProduct>
 		</>
 	);
