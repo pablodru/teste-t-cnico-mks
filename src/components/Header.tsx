@@ -1,17 +1,20 @@
 import { styled } from "styled-components";
 import "@fontsource/montserrat";
 import { FaShoppingCart } from "react-icons/fa";
+import { useAppContext } from "@/contexts/appContext";
 
 export default function Header() {
+	const { productsSelected, setProductsSelected, isOpen, setIsOpen } = useAppContext();
+
 	return (
 		<SCHeader>
 			<div>
 				<h1>MKS</h1>
 				<p>Sistemas</p>
 			</div>
-			<SCCartDiv>
+			<SCCartDiv onClick={() => setIsOpen(prev => !prev)}>
 				<FaShoppingCart style={{ width: "19px", height: "18px" }} />
-				<p> 0 </p>
+				<p> {productsSelected.length} </p>
 			</SCCartDiv>
 		</SCHeader>
 	);
@@ -53,6 +56,7 @@ const SCCartDiv = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	padding: 0 15px;
+	cursor: pointer;
 	p {
 		font-family: "Montserrat";
 		font-weight: 700;

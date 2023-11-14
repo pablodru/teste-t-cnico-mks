@@ -1,25 +1,63 @@
 import { styled } from "styled-components";
 import "@fontsource/montserrat";
+import { ProductType } from "@/components/Product";
+import { useAppContext } from "@/contexts/appContext";
 
-export default function ProductSelected() {
+export default function ProductSelected({
+	product,
+	count,
+}: {
+	product: ProductType;
+	count: Map<any, any>;
+}) {
+	const { productsSelected, setProductsSelected, isOpen, setIsOpen } =
+		useAppContext();
+	const productCount = count.get(product.id) || 0;
+
+	function deleteProduct() {
+		setProductsSelected((prev) => {
+			const indexToDelete = prev.findIndex((p) => p.id === product.id);
+
+			if (indexToDelete !== -1) {
+				const updatedList = [
+					...prev.slice(0, indexToDelete),
+					...prev.slice(indexToDelete + 1),
+				];
+				return updatedList;
+			}
+
+			return prev;
+		});
+	}
+
+	function addProduct(){
+		setProductsSelected(prev => [...prev, product])
+	}
+
 	return (
 		<>
 			<SCProduct>
-				<img src="https://imgnike-a.akamaihd.net/360x360/01279515.jpg" />
-				<SCName> Apple Watch Series 4 GPS </SCName>
+				<img src={product.photo} />
+				<SCName> {product.name} </SCName>
 				<SCQtd>
 					<p>Qtd</p>
 					<div>
-						<button style={{ borderRight: "1px solid #BFBFBF" }}>
+						<button
+							onClick={deleteProduct}
+							style={{ borderRight: "1px solid #BFBFBF" }}
+						>
 							-
 						</button>
-						<p> 1 </p>
-						<button style={{ borderLeft: "1px solid #BFBFBF" }}>
+						<p> {productCount} </p>
+						<button
+							onClick={addProduct}
+							style={{ borderLeft: "1px solid #BFBFBF" }}
+						>
 							+
 						</button>
 					</div>
 				</SCQtd>
-				<p> R$399 </p>
+				<p> R${product.price} </p>
 			</SCProduct>
 		</>
 	);
@@ -45,7 +83,7 @@ const SCProduct = styled.div`
 		font-weight: 700;
 		font-size: 14px;
 		line-height: 17px;
-        color: #000;
+		color: #000;
 	}
 `;
 

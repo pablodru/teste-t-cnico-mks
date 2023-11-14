@@ -1,38 +1,98 @@
 import { styled } from "styled-components";
 import ProductSelected from "./ProductSelected";
 import "@fontsource/montserrat";
+import { useAppContext } from "@/contexts/appContext";
 
 export default function Cart() {
-	return (
-		<>
-			<SCCart>
-				<SCTitle>
-					<h3>Carrinho de compras</h3>
-					<SCClose> X </SCClose>
-				</SCTitle>
-				<SCProducts>
-					<ProductSelected />
-					<ProductSelected />
-				</SCProducts>
-			</SCCart>
-			<SCFinal>
-				<SCTotal>
-					<p>Total:</p>
-					<p>R$798</p>
-				</SCTotal>
-				<button>Finalizar Compra</button>
-			</SCFinal>
-		</>
-	);
+	const { productsSelected, setProductsSelected, isOpen, setIsOpen } =
+		useAppContext();
+
+	const countProductOccurrences = () => {
+		const idCountMap = new Map();
+
+		productsSelected.forEach((product) => {
+			const productId = product.id;
+
+			if (idCountMap.has(productId)) {
+				idCountMap.set(productId, idCountMap.get(productId) + 1);
+			} else {
+				idCountMap.set(productId, 1);
+			}
+		});
+
+		return idCountMap;
+	};
+
+	const calculateTotal = () => {
+		let total = 0;
+	
+		productsSelected.forEach((product) => {
+		  if (product.price) {
+			const productCount = countProductOccurrences().get(product.id) || 0;
+			total += Number(product.price) * productCount;
+		  }
+		});
+	
+		return total;
+	  };
+
+	if (isOpen) {
+		const idOccurrences = countProductOccurrences();
+		const total = calculateTotal()
+
+		return (
+			<>
+				<SCCart>
+					<SCTitle>
+						<h3>Carrinho de compras</h3>
+						<SCClose onClick={() => setIsOpen((prev) => !prev)}>
+							{" "}
+							X{" "}
+						</SCClose>
+					</SCTitle>
+					<SCProducts>
+						{[
+							...new Set(
+								productsSelected.map((product) => product.id)
+							),
+						].map((productId) => {
+							const product = productsSelected.find(
+								(p) => p.id === productId
+							);
+							if (product) {
+								return (
+									<ProductSelected
+										key={productId}
+										product={product}
+										count={idOccurrences}
+									/>
+								);
+							}
+							return null;
+						})}
+					</SCProducts>
+				</SCCart>
+				<SCFinal>
+					<SCTotal>
+						<p>Total:</p>
+						<p>R${total}</p>
+					</SCTotal>
+					<button>Finalizar Compra</button>
+				</SCFinal>
+			</>
+		);
+	} else {
+		return null;
+	}
 }
 
 const SCProducts = styled.div`
-    display: flex;
-    flex-direction: column;
-    min-height:101px;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px; 
+	display: flex;
+	flex-direction: column;
+	min-height: 101px;
+	justify-content: space-between;
+	align-items: center;
+	gap: 25px;
 `;
 
 const SCTitle = styled.div`
@@ -114,4 +174,5 @@ const SCClose = styled.div`
 	font-size: 20px;
 	line-height: 15px;
 	color: #ffffff;
+	cursor: pointer;
 `;

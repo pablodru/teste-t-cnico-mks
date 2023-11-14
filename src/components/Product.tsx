@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { FaShoppingBag } from "react-icons/fa";
 import "@fontsource/montserrat";
+import { useAppContext } from "@/contexts/appContext";
 
 export type ProductType = {
 	id: number;
@@ -18,9 +19,10 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
+	const { productsSelected, setProductsSelected, isOpen, setIsOpen } = useAppContext();
 
     function buy () {
-
+		setProductsSelected(prev => [...prev, product])
     }
 
 	return (
@@ -93,6 +95,7 @@ const SCProduct = styled.div`
 		justify-content: space-around;
 		align-items: center;
 		padding: 0 40px;
+		cursor: pointer;
 		p {
 			font-family: "Montserrat";
 			font-weight: 600;
