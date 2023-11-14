@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { FaShoppingBag } from "react-icons/fa";
+import "@fontsource/montserrat";
 
 export type ProductType = {
 	id: number;
@@ -19,7 +20,7 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
 
     function buy () {
-        
+
     }
 
 	return (
@@ -36,7 +37,7 @@ export default function Product({ product }: ProductProps) {
 				<p>COMPRAR</p>
 			</div>
 			<div>
-				<p> R$ {Number(product.price)} </p>
+				<p> R${Number(product.price)} </p>
 			</div>
 		</SCProduct>
 	);

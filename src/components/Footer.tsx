@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import "@fontsource/montserrat";
 
 export default function Footer() {
 	return (

@@ -2,6 +2,7 @@ import Product, { ProductType } from "@/components/Product";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import "@fontsource/montserrat";
 
 export default function Home({}) {
 	const [products, setProducts] = useState<ProductType[]>([]);
