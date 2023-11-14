@@ -30,6 +30,9 @@ const SCHeader = styled.div`
 	padding: 0 80px;
 	div:nth-child(1) {
 		display: flex;
+		min-height:44px;
+		align-items: last baseline;
+		gap:10px;
 		h1 {
 			font-family: "Montserrat";
 			font-weight: 600;
@@ -43,6 +46,7 @@ const SCHeader = styled.div`
 			font-size: 20px;
 			line-height: 19px;
 			color: #ffffff;
+			vertical-align:bottom;
 		}
 	}
 `;

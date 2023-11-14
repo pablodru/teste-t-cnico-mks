@@ -44,14 +44,14 @@ export default function ProductSelected({
 					<div>
 						<button
 							onClick={deleteProduct}
-							style={{ borderRight: "1px solid #BFBFBF" }}
+							style={{ borderRight: "1px solid #BFBFBF", cursor:'pointer' }}
 						>
 							-
 						</button>
 						<p> {productCount} </p>
 						<button
 							onClick={addProduct}
-							style={{ borderLeft: "1px solid #BFBFBF" }}
+							style={{ borderLeft: "1px solid #BFBFBF", cursor:'pointer' }}
 						>
 							+
 						</button>
